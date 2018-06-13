@@ -28,4 +28,4 @@ app.get('/api/listings/1001/reviews', (req, res) => {
 });
 
 
-app.listen(port, () => `listening on port ${port}`);
+app.listen(port, () => (console.log(`listening on port ${port}`)));

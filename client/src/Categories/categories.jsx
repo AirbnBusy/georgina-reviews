@@ -1,42 +1,58 @@
 import React from 'react';
-import helper from '../helperFunctions.js';
-import {Box, InnerBox, CategoriesLeftGroup, CategoriesRightGroup, Name, Stars} from './CategoriesStyles.jsx';
+import PropTypes from 'prop-types';
+import helper from '../helperFunctions';
+import { Box, InnerBox, CategoriesLeftGroup, CategoriesRightGroup, Name, Stars } from './CategoriesStyles';
 
 class Categories extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-
-    }
+    };
   }
 
   render() {
-    var categories1 = helper.getAvgRatingPerCategory(this.props.listingData).slice(0,3)
-    var categories2 = helper.getAvgRatingPerCategory(this.props.listingData).slice(3)
+    const categories1 = helper.getAvgRatingPerCategory(this.props.listingData).slice(0, 3);
+    const categories2 = helper.getAvgRatingPerCategory(this.props.listingData).slice(3);
     return (
       <Box>
         <InnerBox>
           <CategoriesLeftGroup>
-            {categories1.map((category, i) => (
-              <div key={i}>
+            {categories1.map(category => (
+              <div key={category.id}>
                 <Name>{category.name}</Name>
-                <Stars><img src={category.rating[0]}/><img src={category.rating[1]}/><img src={category.rating[2]}/><img src={category.rating[3]}/><img src={category.rating[4]}/></Stars>
+                <Stars>
+                  <img src={category.rating[0]} alt="star" />
+                  <img src={category.rating[1]} alt="star" />
+                  <img src={category.rating[2]} alt="star" />
+                  <img src={category.rating[3]} alt="star" />
+                  <img src={category.rating[4]} alt="star" />
+                </Stars>
               </div>
              ))}
           </CategoriesLeftGroup>
           <CategoriesRightGroup>
-           {categories2.map((category, h) => (
-              <div key={h}>
+            {categories2.map(category => (
+              <div key={category.id}>
                 <Name>{category.name}</Name>
-                <Stars><img src={category.rating[0]}/><img src={category.rating[1]}/><img src={category.rating[2]}/><img src={category.rating[3]}/><img src={category.rating[4]}/></Stars>
+                <Stars>
+                  <img src={category.rating[0]} alt="star" />
+                  <img src={category.rating[1]} alt="star" />
+                  <img src={category.rating[2]} alt="star" />
+                  <img src={category.rating[3]} alt="star" />
+                  <img src={category.rating[4]} alt="star" />
+                </Stars>
               </div>
            ))}
           </CategoriesRightGroup>
         </InnerBox>
-      </Box>    
-    )
+      </Box>
+    );
   }
 }
 
 
 export default Categories;
+
+Categories.propTypes = {
+  listingData: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

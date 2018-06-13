@@ -1,43 +1,65 @@
 import React from 'react';
-import {Box, Page, Arrow} from './PaginationStyles.jsx';
+import PropTypes from 'prop-types';
+import { Box, Page, Arrow } from './PaginationStyles';
 
 class Pagination extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       firstPage: 1,
-      currentPage: 1,
     };
+    this.changeCurrentPageBack = this.changeCurrentPageBack.bind(this);
+    this.changeCurrentPage = this.changeCurrentPage.bind(this);
+    this.changeCurrentPageToNext = this.changeCurrentPageToNext.bind(this);
   }
 
-  changeCurrentPage(e){
+  changeCurrentPage(e) {
     this.props.changeCurrentPage(e.target.value);
   }
 
-  changeCurrentPageToNext(){
+  changeCurrentPageToNext() {
     this.props.addToCurrentPage();
   }
- 
- changeCurrentPageBack(){
-   this.props.substractFromCurrentPage();
- }
+
+  changeCurrentPageBack() {
+    this.props.substractFromCurrentPage();
+  }
 
   render() {
-    return (
-      <Box>
-        <div>
-         {this.props.currentPage === 1 ? <Arrow></Arrow> :  <Page onClick={this.changeCurrentPageBack.bind(this)}><img src="././arrowBack.png"/></Page> }
-           <Page value={this.state.firstPage} onClick={this.changeCurrentPage.bind(this)}>{this.state.firstPage}</Page>
-           <Page value={this.props.currentPage + 1} onClick={this.changeCurrentPage.bind(this)}>{2}</Page>
-           {this.props.currentPage > 1 ? '...': <Page value={this.props.currentPage + 1} onClick={this.changeCurrentPage.bind(this)}>{3}</Page> }
-           <Page value={this.props.currentPage + 1} onClick={this.changeCurrentPage.bind(this)}>{this.props.currentPage < Math.ceil(this.props.filteredData.length / 7) ? (this.props.currentPage + 3) : (this.props.currentPage - 2)}</Page>
-           <Page value={this.props.currentPage + 2} onClick={this.changeCurrentPage.bind(this)}>{this.props.currentPage < Math.ceil(this.props.filteredData.length / 7) ? (this.props.currentPage + 4) : (this.props.currentPage - 1)}</Page>
-           ...
-           <Page value={Math.ceil(this.props.filteredData.length / 7)} onClick={this.changeCurrentPage.bind(this)}>{Math.ceil(this.props.filteredData.length / 7)}</Page>
-           <Page onClick={this.changeCurrentPageToNext.bind(this)}><img src="././arrowNext.png"/></Page>
-        </div>
-      </Box>
-    );
+    if (this.props.filteredData.length > 1) {
+      return (
+        <Box>
+          <div>
+            {this.props.currentPage === 1 ? <Arrow /> : <Page onClick={this.changeCurrentPageBack}><img src="././arrowBack.png" alt="star" /></Page> }
+            <Page
+              value={this.state.firstPage}
+              onClick={this.changeCurrentPage}
+            >
+              {this.state.firstPage}
+            </Page>
+            <Page value={2} onClick={this.changeCurrentPage}>{2}</Page>
+            <Page value={3} onClick={this.changeCurrentPage}>{3}</Page>
+            ...
+            <Page
+              value={Math.ceil(this.props.filteredData.length / 7)}
+              onClick={this.changeCurrentPage}
+            >
+              {Math.ceil(this.props.filteredData.length / 7)}
+            </Page>
+            <Page onClick={this.changeCurrentPageToNext}><img src="././arrowNext.png" alt="star" /></Page>
+          </div>
+        </Box>
+      );
+    }
+    return <Box />;
   }
 }
 export default Pagination;
+
+Pagination.propTypes = {
+  changeCurrentPage: PropTypes.func.isRequired,
+  addToCurrentPage: PropTypes.func.isRequired,
+  substractFromCurrentPage: PropTypes.func.isRequired,
+  filteredData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentPage: PropTypes.number.isRequired,
+};
