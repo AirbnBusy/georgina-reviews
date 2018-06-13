@@ -5,27 +5,26 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'tennis203',
-  database: 'reviews'
+  database: 'reviews',
 });
 
 connection.connect();
 
 
-function insertDummyData() {
-  var listings = data.generateListings();
-  var reviews = data.generateReviews();
-  listings.forEach(function(listing) {
-    connection.query(listing)
-  })
-  reviews.forEach(function(review) {
-  connection.query(review)
-  })
-}
+const insertDummyData = () => {
+  const listings = data.generateListings();
+  const reviews = data.generateReviews();
+  listings.forEach((listing) => {
+    connection.query(listing);
+  });
+  reviews.forEach((review) => {
+    connection.query(review);
+  });
+};
 
 
-function getAllListingReviews(callback) {
-  const q = 'SELECT listings.api_id,reviews.* FROM reviews INNER JOIN listings ON listings.id = reviews.listings_id AND api_id = 1001';
-
+const checkDatabase = (callback) => {
+  const q = 'SELECT COUNT(*) FROM reviews';
   connection.query(q, (error, results) => {
     if (error) {
       callback(error, null);
@@ -33,10 +32,24 @@ function getAllListingReviews(callback) {
       callback(null, results);
     }
   });
-}
+};
+
+
+const getAllListingReviews = (id, callback) => {
+  const q = 'SELECT listings.api_id,reviews.* FROM reviews INNER JOIN listings ON listings.id = reviews.listings_id AND api_id = (?)';
+
+  connection.query(q, [id], (error, results) => {
+    if (error) {
+      callback(error, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
 
 
 module.exports = {
   getAllListingReviews,
-  insertDummyData
+  insertDummyData,
+  checkDatabase,
 };

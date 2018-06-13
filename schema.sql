@@ -18,7 +18,7 @@ CREATE TABLE reviews (
   id INTEGER NOT NULL AUTO_INCREMENT,
   listings_id INTEGER NOT NULL,
   user_name CHAR(50) NOT NULL,
-  flagged INT NOT NULL,
+  flagged INT NULL,
   photo CHAR(200) NOT NULL,
   review VARCHAR(1000) NOT NULL,
   owner_name char(20) NOT NULL,
@@ -35,7 +35,5 @@ CREATE TABLE reviews (
 
 
 ALTER TABLE reviews ADD FOREIGN KEY (listings_id) REFERENCES listings (id);
-
-
 
 

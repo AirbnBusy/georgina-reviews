@@ -28,20 +28,9 @@ var generateReviews = function(){
   var ownerName = faker.name.firstName();
   var numberOfReviews = randomInt(250,600);
   var query =[];
-  var listingsCounter = 1001; 
-  var createReviews = function(listingsId, ownerName, numberOfReviews){
-      var user = faker.name.firstName();
-      var flagged = 0;
-      var avatar = faker.internet.avatar();
-      var review = faker.lorem.paragraph();
-      var date = JSON.stringify(faker.date.between('2015-01-01', '2018-06-02')).slice(1, 11);;
-      var cleanliness = randomInt(1,5);
-      var communication = randomInt(1,5);
-      var checkin = randomInt(1,5);
-      var accuracy = randomInt(1,5);
-      var value = randomInt(1,5);
-      var location = randomInt(1,5);
-      var response = function () {
+  var listingsCounter = 1; 
+  var createReviews = function(listingsId, ownerName, numberOfReviews){ 
+        var response = function () {
          var sentences = faker.lorem.sentences();
          var ownerResponse = ''
          if(test) {
@@ -54,23 +43,31 @@ var generateReviews = function(){
       var ownerResponse = response();
       var counter = 0; 
       while(counter < numberOfReviews) { 
-        query.push(`INSERT INTO reviews (listings_id, user_name, flagged, photo, review, owner_name, owner_response, review_date, rating_cleanliness, rating_communication, rating_accuracy, rating_checkin, rating_location, rating_value) VALUES (${listingsId}, '${user}', ${flagged}, '${avatar}', '${review}', '${ownerName}', '${ownerResponse}', '${date}', ${cleanliness}, ${communication}, ${accuracy}, ${checkin}, ${location}, ${value})`)
+        var date = JSON.stringify(faker.date.between('2015-01-01', '2018-06-02')).slice(1, 11);;
+        var user = faker.name.firstName();
+        var avatar = faker.internet.avatar();
+        var review = faker.lorem.paragraph();
+        var cleanliness = randomInt(1,5);
+        var communication = randomInt(1,5);
+        var checkin = randomInt(1,5);
+        var accuracy = randomInt(1,5);
+        var value = randomInt(1,5);
+        var location = randomInt(1,5);
+      
+        query.push(`INSERT INTO reviews (listings_id, user_name,photo, review, owner_name, owner_response, review_date, rating_cleanliness, rating_communication, rating_accuracy, rating_checkin, rating_location, rating_value) VALUES (${listingsId}, '${user}', '${avatar}', '${review}', '${ownerName}', '${ownerResponse}', '${date}', ${cleanliness}, ${communication}, ${accuracy}, ${checkin}, ${location}, ${value});`)
         counter++
       }
     }
-  while (listingsCounter < 1101) { 
-    console.log(numberOfReviews)
+  while (listingsCounter < 101) { 
     createReviews(listingsCounter, ownerName, numberOfReviews);
     listingsCounter++;
     ownerName = faker.name.firstName();
     numberOfReviews = randomInt(250,600)
   }
-  return query;
+ return query;
 }
 
 module.exports = {
-  generateListings, 
+  generateListings,
   generateReviews
 }
-
- 
