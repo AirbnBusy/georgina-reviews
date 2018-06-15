@@ -57,6 +57,8 @@ class AppReviews extends React.Component {
 
   receiveData() {
     const self = this;
+    const id = document.location.href.slice(22);
+    console.log(id);
     axios.get('/api/listings/1001/reviews')
       .then((response) => {
         self.setState({
