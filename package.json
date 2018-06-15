@@ -2,6 +2,12 @@
   "name": "georgina-reviews",
   "version": "1.0.0",
   "description": "",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
@@ -52,6 +58,7 @@
     "init": "^0.1.2",
     "mysql": "^2.15.0",
     "nodemon": "^1.17.5",
+    "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dev": "0.0.1",
     "react-dom": "^16.4.0",

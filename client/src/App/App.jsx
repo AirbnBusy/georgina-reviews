@@ -1,126 +1,137 @@
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import Header from '../Header/header.jsx';
-import Categories from '../Categories/categories.jsx';
-import Reviews from '../Reviews/reviews.jsx';
-import Pagination from '../Pagination/pagination.jsx';
-import helper from '../helperFunctions.js';
-import Search from '../Search/search.jsx';
-import SearchDetails from '../SearchDetails/searchDetails.jsx';
-import {Container} from './AppStyles.jsx';
+import Header from '../Header/header';
+import Categories from '../Categories/categories';
+import Reviews from '../Reviews/reviews';
+import Pagination from '../Pagination/pagination';
+import helper from '../helperFunctions';
+import SearchDetails from '../SearchDetails/searchDetails';
+import { Container } from './AppStyles';
 
 class AppReviews extends React.Component {
   constructor(props) {
-    super(props)
-  	this.state = {
+    super(props);
+    this.state = {
       listingData: [],
       avgRating: 0,
       filteredData: [],
       searched: false,
       currentPage: 1,
-    }
+    };
     this.handleSearchResults = this.handleSearchResults.bind(this);
     this.changeSearchStatus = this.changeSearchStatus.bind(this);
     this.removeFilteredSearch = this.removeFilteredSearch.bind(this);
     this.changeCurrentPage = this.changeCurrentPage.bind(this);
     this.substractFromCurrentPage = this.substractFromCurrentPage.bind(this);
-	};
+    this.addToCurrentPage = this.addToCurrentPage.bind(this);
+  }
 
   componentDidMount() {
     this.receiveData();
-  };
+  }
 
   changeCurrentPage(value) {
-    var number = Number(value)
-    if(number <= Math.ceil(this.state.filteredData.length / 7)) {
+    const number = Number(value);
+    if (number <= Math.ceil(this.state.filteredData.length / 7)) {
       this.setState({
-        currentPage: number
-      })
-    } else {
-      number-=3
-      this.setState({
-        currentPage: number
-      })
-    } 
+        currentPage: number,
+      });
+    }
   }
 
   addToCurrentPage() {
-    var activePage = this.state.currentPage
-    activePage++
-    console.log(activePage)
+    let activePage = this.state.currentPage;
+    activePage += 1;
     this.setState({
-      currentPage: activePage
-    })
+      currentPage: activePage,
+    });
   }
 
   substractFromCurrentPage() {
-    var activePage = this.state.currentPage
-    activePage--
-    console.log(activePage)
+    let activePage = this.state.currentPage;
+    activePage -= 1;
     this.setState({
-      currentPage: activePage
-    })
+      currentPage: activePage,
+    });
   }
 
   receiveData() {
-    var self = this;
+    const self = this;
     axios.get('/api/listings/1001/reviews')
-      .then(function (response){
+      .then((response) => {
         self.setState({
           listingData: response.data,
           avgRating: helper.getAvgRating(response.data),
           filteredData: response.data,
           value: null,
-        })
+        });
       })
-      .catch(function (error){
+      .catch((error) => {
         console.log(error);
-      })
-  };
+      });
+  }
 
   changeSearchStatus() {
-    if(!this.state.searched) {
+    if (!this.state.searched) {
       this.setState({
-        searched: true
-      })
+        searched: true,
+      });
     }
   }
 
-  handleSearchResults(value) {
-    var data = this.state.listingData
-    var filteredData = [];
-    data.forEach(function(listing) {
-      if(listing.review.includes(value)) {
-         filteredData.push(listing)
+  handleSearchResults(currentValue) {
+    const data = this.state.listingData;
+    const currentFilteredData = [];
+    data.forEach((listing) => {
+      if (listing.review.includes(currentValue)) {
+        currentFilteredData.push(listing);
       }
-    })
+    });
     this.setState({
-      filteredData: filteredData,
-      value: value,
-    })
+      filteredData: currentFilteredData,
+      value: currentValue,
+    });
   }
 
   removeFilteredSearch() {
-    var allData = this.state.listingData
+    const allData = this.state.listingData;
     this.setState({
       filteredData: allData,
-      searched:false,
-    })
+      searched: false,
+    });
   }
 
   render() {
     return (
       <Container>
-        <Header handleSearchResults={this.handleSearchResults} changeSearchStatus={this.changeSearchStatus} listingData={this.state.listingData} avgRating={this.state.avgRating}/>
-        {this.state.searched ? <SearchDetails removeFilteredSearch={this.removeFilteredSearch} filteredData={this.state.filteredData} value={this.state.value}/> : <Categories listingData={this.state.listingData}/>} 
-        <Reviews filteredData={this.state.filteredData} currentPage={this.state.currentPage}/>
-        <Pagination changeCurrentPage={this.changeCurrentPage} filteredData={this.state.filteredData} currentPage={this.state.currentPage} addToCurrentPage={this.addToCurrentPage.bind(this)} substractFromCurrentPage={this.substractFromCurrentPage}/>
+        <Header
+          handleSearchResults={this.handleSearchResults}
+          changeSearchStatus={this.changeSearchStatus}
+          listingData={this.state.listingData}
+          avgRating={this.state.avgRating}
+        />
+        {this.state.searched ?
+          <SearchDetails
+            removeFilteredSearch={this.removeFilteredSearch}
+            filteredData={this.state.filteredData}
+            value={this.state.value}
+          />
+          : <Categories listingData={this.state.listingData} />}
+        <Reviews
+          filteredData={this.state.filteredData}
+          currentPage={this.state.currentPage}
+        />
+        <Pagination
+          changeCurrentPage={this.changeCurrentPage}
+          filteredData={this.state.filteredData}
+          currentPage={this.state.currentPage}
+          addToCurrentPage={this.addToCurrentPage}
+          substractFromCurrentPage={this.substractFromCurrentPage}
+        />
       </Container>
-    )
-  };
-
-};
+    );
+  }
+}
 
 export default AppReviews;
 

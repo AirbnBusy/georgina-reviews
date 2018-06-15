@@ -1,20 +1,20 @@
 import React from 'react';
-import AppReviews from '../App/App.jsx';
-import helper from '../helperFunctions.js';
-import Search from '../Search/search.jsx';
-import {Wrapper, Row, HeaderDescription, Title, Box, InnerBox, Heading, ReviewsTotal, StarsTotal} from  './HeaderStyles.jsx';
+import PropTypes from 'prop-types';
+import helper from '../helperFunctions';
+import Search from '../Search/search';
+import { Wrapper, Row, HeaderDescription, Title, Box, InnerBox, Heading, ReviewsTotal, StarsTotal } from './HeaderStyles';
 
 class Header extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-    }
+    };
   }
 
   render() {
-    var stars = helper.convertRatingsToStars(this.props.avgRating)
-  	return (
-  	 <Wrapper>
+    const stars = helper.convertRatingsToStars(this.props.avgRating);
+    return (
+      <Wrapper>
         <Row>
           <HeaderDescription>
             <Title>
@@ -24,8 +24,8 @@ class Header extends React.Component {
                     <ReviewsTotal> {this.props.listingData.length} Reviews</ReviewsTotal>
                     <StarsTotal>
                       <div>
-                        {stars.map((star, i)=> (
-                          <img key={i} src={star}></img>
+                        {stars.map(star => (
+                          <img key={star.id} src={star} alt="star" />
                         ))}
                       </div>
                     </StarsTotal>
@@ -34,13 +34,21 @@ class Header extends React.Component {
               </Box>
             </Title>
           </HeaderDescription>
-          <Search handleSearchResults={this.props.handleSearchResults} changeSearchStatus={this.props.changeSearchStatus}/>
+          <Search
+            handleSearchResults={this.props.handleSearchResults}
+            changeSearchStatus={this.props.changeSearchStatus}
+          />
         </Row>
       </Wrapper>
-  	)
+    );
   }
 }
 
-
 export default Header;
- 
+
+Header.propTypes = {
+  avgRating: PropTypes.number.isRequired,
+  listingData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleSearchResults: PropTypes.func.isRequired,
+  changeSearchStatus: PropTypes.func.isRequired,
+};
