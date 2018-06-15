@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const data = require('../faker.js');
+// const data = require('../faker.js');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -11,28 +11,28 @@ const connection = mysql.createConnection({
 connection.connect();
 
 
-const insertDummyData = () => {
-  const listings = data.generateListings();
-  const reviews = data.generateReviews();
-  listings.forEach((listing) => {
-    connection.query(listing);
-  });
-  reviews.forEach((review) => {
-    connection.query(review);
-  });
-};
+// const insertDummyData = () => {
+//   const listings = data.generateListings();
+//   const reviews = data.generateReviews();
+//   listings.forEach((listing) => {
+//     connection.query(listing);
+//   });
+//   reviews.forEach((review) => {
+//     connection.query(review);
+//   });
+// };
 
 
-const checkDatabase = (callback) => {
-  const q = 'SELECT COUNT(*) FROM reviews';
-  connection.query(q, (error, results) => {
-    if (error) {
-      callback(error, null);
-    } else {
-      callback(null, results);
-    }
-  });
-};
+// const checkDatabase = (callback) => {
+//   const q = 'SELECT COUNT(*) FROM reviews';
+//   connection.query(q, (error, results) => {
+//     if (error) {
+//       callback(error, null);
+//     } else {
+//       callback(null, results);
+//     }
+//   });
+// };
 
 
 const getAllListingReviews = (id, callback) => {
@@ -50,6 +50,6 @@ const getAllListingReviews = (id, callback) => {
 
 module.exports = {
   getAllListingReviews,
-  insertDummyData,
-  checkDatabase,
+  // insertDummyData,
+  // checkDatabase,
 };

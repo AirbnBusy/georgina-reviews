@@ -12,7 +12,7 @@ class AppReviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listingData: [],
+      listingData: null,
       avgRating: 0,
       filteredData: [],
       searched: false,
@@ -57,9 +57,9 @@ class AppReviews extends React.Component {
 
   receiveData() {
     const self = this;
-    const id = document.location.href.slice(22);
+    const id = document.location.href.slice(31, 35);
     console.log(id);
-    axios.get('/api/listings/1001/reviews')
+    axios.get(`/api/listings/${id}/reviews`)
       .then((response) => {
         self.setState({
           listingData: response.data,
@@ -104,34 +104,37 @@ class AppReviews extends React.Component {
   }
 
   render() {
-    return (
-      <Container>
-        <Header
-          handleSearchResults={this.handleSearchResults}
-          changeSearchStatus={this.changeSearchStatus}
-          listingData={this.state.listingData}
-          avgRating={this.state.avgRating}
-        />
-        {this.state.searched ?
-          <SearchDetails
-            removeFilteredSearch={this.removeFilteredSearch}
-            filteredData={this.state.filteredData}
-            value={this.state.value}
+    if (this.state.listingData) {
+      return (
+        <Container>
+          <Header
+            handleSearchResults={this.handleSearchResults}
+            changeSearchStatus={this.changeSearchStatus}
+            listingData={this.state.listingData}
+            avgRating={this.state.avgRating}
           />
-          : <Categories listingData={this.state.listingData} />}
-        <Reviews
-          filteredData={this.state.filteredData}
-          currentPage={this.state.currentPage}
-        />
-        <Pagination
-          changeCurrentPage={this.changeCurrentPage}
-          filteredData={this.state.filteredData}
-          currentPage={this.state.currentPage}
-          addToCurrentPage={this.addToCurrentPage}
-          substractFromCurrentPage={this.substractFromCurrentPage}
-        />
-      </Container>
-    );
+          {this.state.searched ?
+            <SearchDetails
+              removeFilteredSearch={this.removeFilteredSearch}
+              filteredData={this.state.filteredData}
+              value={this.state.value}
+            />
+            : <Categories listingData={this.state.listingData} />}
+          <Reviews
+            filteredData={this.state.filteredData}
+            currentPage={this.state.currentPage}
+          />
+          <Pagination
+            changeCurrentPage={this.changeCurrentPage}
+            filteredData={this.state.filteredData}
+            currentPage={this.state.currentPage}
+            addToCurrentPage={this.addToCurrentPage}
+            substractFromCurrentPage={this.substractFromCurrentPage}
+          />
+        </Container>
+      );
+    }
+    return null;
   }
 }
 

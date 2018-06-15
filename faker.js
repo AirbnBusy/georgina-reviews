@@ -6,7 +6,7 @@ function generateListings () {
   var counter = 0; 
   var listings = [];
   var id = 1000; 
-  while(counter < 100) {
+  while(counter < 101) {
     counter ++
     id++
   listings.push(`INSERT INTO listings (api_id) VALUES(${id})`)
@@ -26,7 +26,7 @@ var test = ownerResponse[randomInt(0, ownerResponse.length - 1)]
 
 var generateReviews = function(){
   var ownerName = faker.name.firstName();
-  var numberOfReviews = randomInt(250,600);
+  var numberOfReviews = randomInt(20,30);
   var query =[];
   var listingsCounter = 1; 
   var createReviews = function(listingsId, ownerName, numberOfReviews){ 
@@ -62,7 +62,7 @@ var generateReviews = function(){
     createReviews(listingsCounter, ownerName, numberOfReviews);
     listingsCounter++;
     ownerName = faker.name.firstName();
-    numberOfReviews = randomInt(250,600)
+    numberOfReviews = randomInt(20,30)
   }
  return query;
 }

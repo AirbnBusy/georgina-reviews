@@ -9,16 +9,18 @@ const port = 3002;
 app.use('/listings/:id/reviews', express.static(path.join(__dirname, '../client')));
 app.use(bodyParser.json());
 
-db.checkDatabase((error, results) => {
-  if (error) {
-    console.error(error);
-  } else if (Object.values(results[0])[0] < 1) {
-    db.insertDummyData();
-  }
-});
+// db.checkDatabase((error, results) => {
+//   if (error) {
+//     console.error(error);
+//   } else if (Object.values(results[0])[0] < 1) {
+//     db.insertDummyData();
+//   }
+// });
 
-app.get('/api/listings/1001/reviews', (req, res) => {
-  db.getAllListingReviews(1002, (error, results) => {
+app.get('/api/listings/:id/reviews', (req, res) => {
+  const { params } = req;
+  console.log(params.id);
+  db.getAllListingReviews(params.id, (error, results) => {
     if (error) {
       res.status(500).send();
     } else {
