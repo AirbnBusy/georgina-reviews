@@ -6,7 +6,7 @@ const db = require('../database/index.js');
 const app = express();
 const port = 3002;
 
-app.use('/listings/1001/reviews', express.static(path.join(__dirname, '../client')));
+app.use('/listings/:id/reviews', express.static(path.join(__dirname, '../client')));
 app.use(bodyParser.json());
 
 db.checkDatabase((error, results) => {
