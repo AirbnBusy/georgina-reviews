@@ -17,8 +17,8 @@ class Categories extends React.Component {
       <Box>
         <InnerBox>
           <CategoriesLeftGroup>
-            {categories1.map(category => (
-              <div key={category.id}>
+            {categories1.map((category, i) => (
+              <div key={i}>
                 <Name>{category.name}</Name>
                 <Stars>
                   <img src={category.rating[0]} alt="star" />
@@ -31,8 +31,8 @@ class Categories extends React.Component {
              ))}
           </CategoriesLeftGroup>
           <CategoriesRightGroup>
-            {categories2.map(category => (
-              <div key={category.id}>
+            {categories2.map((category, i) => (
+              <div key={i}>
                 <Name>{category.name}</Name>
                 <Stars>
                   <img src={category.rating[0]} alt="star" />

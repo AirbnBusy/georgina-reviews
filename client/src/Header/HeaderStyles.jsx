@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const HeadWrapper = styled.div`
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #DCDCDC;
+  background-color:green;
 `;
 const Row = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ const StarsTotal = styled.div`
   margin-left: 16px;
 `;
 module.exports = {
-  Wrapper,
+  HeadWrapper,
   Row,
   HeaderDescription,
   Title,

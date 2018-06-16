@@ -4,6 +4,7 @@ const Box = styled.div`
   border-top: none;
   border-bottom:none;
   padding: 10px;
+  background-color:red;
 `;
 const Page = styled.button`
   width: 35px;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Box = styled.div`
   border-top: none;
+  background-color:purple;
 `;
 const InnerBox = styled.div`
   margin: 0px;

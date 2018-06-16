@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import helper from '../helperFunctions';
 import Search from '../Search/search';
-import { Wrapper, Row, HeaderDescription, Title, Box, InnerBox, Heading, ReviewsTotal, StarsTotal } from './HeaderStyles';
+import { HeadWrapper, Row, HeaderDescription, Title, Box, InnerBox, Heading, ReviewsTotal, StarsTotal } from './HeaderStyles';
 
 class Header extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Header extends React.Component {
   render() {
     const stars = helper.convertRatingsToStars(this.props.avgRating);
     return (
-      <Wrapper>
+      <HeadWrapper>
         <Row>
           <HeaderDescription>
             <Title>
@@ -24,8 +24,8 @@ class Header extends React.Component {
                     <ReviewsTotal> {this.props.listingData.length} Reviews</ReviewsTotal>
                     <StarsTotal>
                       <div>
-                        {stars.map(star => (
-                          <img key={star.id} src={star} alt="star" />
+                        {stars.map((star, i) => (
+                          <img key={i} src={star} alt="star" />
                         ))}
                       </div>
                     </StarsTotal>
@@ -39,7 +39,7 @@ class Header extends React.Component {
             changeSearchStatus={this.props.changeSearchStatus}
           />
         </Row>
-      </Wrapper>
+      </HeadWrapper>
     );
   }
 }

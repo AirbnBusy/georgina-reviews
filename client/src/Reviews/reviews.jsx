@@ -15,8 +15,8 @@ class Reviews extends React.Component {
       this.props.filteredData.slice(this.props.currentPage - 1, this.props.currentPage + 6);
     return (
       <Box>
-        {data.map(review => (
-          <InnerBox key={review.id}>
+        {data.map((review, i) => (
+          <InnerBox key={i}>
             <div>
               <Avatar src={review.photo} />
             </div>

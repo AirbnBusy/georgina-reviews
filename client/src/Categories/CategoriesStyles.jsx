@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 const Box = styled.div`
-  margin-left: -8px;
-  margin-right: -8px;
+  margin-left: 0px;
+  margin-right: 0px;
   padding-top: 0px;
   padding-bottom: 12px;
   border-bottom: 1px solid #DCDCDC;
+  background-color:teal;
 `;
 const InnerBox = styled.div`
   padding-left: 8px;
